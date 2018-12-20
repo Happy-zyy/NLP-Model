@@ -90,7 +90,7 @@ if __name__ == '__main__':
         # step4 start train
         text_cnn.train(train_x,train_y)
         # step5 validataion
-        accur,loss = text_cnn.validataion(train_x, train_y)
+        accur,loss = text_cnn.validataion(test_x, test_y)
         results.append(accur)
         print('cv {} accur is :{:.3f} loss is {:.3f}'.format(index+1,accur,loss))
         text_cnn.close()
