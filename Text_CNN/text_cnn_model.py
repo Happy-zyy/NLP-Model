@@ -16,7 +16,7 @@ class TextCNN():
     __shuffer_falg = False
     __static_falg = True
 
-    def __init__(self,W_list,shuffer_falg, static_falg, filter_numbers, filter_sizes,sentence_length,embedding_size,learnrate, epochs, batch_size, dropout_pro):
+    def __init__(self,W_list,shuffer_falg, static_falg, filter_numbers, filter_sizes,sentence_length,embedding_size,learnrate, epochs, batch_size, dropout_pro, L2_lambda = 0.1):
 
         self.__shuffer_falg = shuffer_falg
         self.__static_falg = static_falg
@@ -27,6 +27,7 @@ class TextCNN():
         self.batch_size = batch_size
         self.dropout_pro_item = dropout_pro
         self.embedding_size = embedding_size
+        self.L2_lambda = L2_lambda
         # 1. setting graph
         tf.reset_default_graph()
         self.train_graph = tf.Graph()
@@ -39,9 +40,6 @@ class TextCNN():
             self.l2_loss = tf.constant(0.0)
             # self.embedding_layer = tf.placeholder(dtype=tf.float32, shape=[self.batch_size, sentence_length, embedding_size],
             #                                       name='embedding_layer')
-
-
-
             #2 embedding layer
             with tf.name_scope('embedding_layer'):
                 train_bool = not self.__static_falg
@@ -90,7 +88,7 @@ class TextCNN():
 
             with tf.name_scope('loss'):
                 losses = tf.nn.softmax_cross_entropy_with_logits(logits=self.softmax_values,labels=self.input_y)
-                self.loss = tf.reduce_mean(losses) + 0.001 * self.l2_loss #lambda = 0.001
+                self.loss = tf.reduce_mean(losses) + self.L2_lambda * self.l2_loss
 
                 # print ('---------1',self.loss)
                 tf.summary.scalar('last_loss',self.loss)
@@ -130,12 +128,13 @@ class TextCNN():
                     self.learning_rate:self.learning_rate_item
                 }
                 _,summarys,loss,accuracy = self.session.run([self.train_op,self.merged,self.loss,self.accuracy],feed_dict=feed)
+                # each 5 batch print log
+                if batch_i % 20 == 0:
+                    print('Epoch {:>3} Batch {:>4}/{} train_loss = {:.3f} accuracy = {:.3f}'.
+                          format(epoch, batch_i, (len(train_x) // self.batch_size), loss, accuracy))
                 train_loss, train_acc, count = train_loss + loss, train_acc + accuracy, count + 1
                 self.train_writer.add_summary(summarys,epoch)
-                # each 5 batch print log
-                if (batch_i+1) % 15 == 0:
-                    print('Epoch {:>3} Batch {:>4}/{} train_loss = {:.3f} accuracy = {:.3f}'.
-                          format(epoch,batch_i,(len(train_x)//self.batch_size),train_loss/float(count),train_acc/float(count)))
+
 
     def validataion(self,test_x, test_y):
         test_batch = self.__get_batchs(test_x,test_y,self.batch_size)
@@ -143,15 +142,15 @@ class TextCNN():
         for batch_i in range(len(test_x) // self.batch_size):
             x,y = next(test_batch)
             feed = {
-                self.embedding_layer: x,
+                self.input_x: x,
                 self.input_y: y,
                 self.dropout_pro: self.dropout_pro_item,
                 self.learning_rate: 1.0
             }
             loss ,accuracy = self.session.run([self.loss,self.accuracy],feed_dict=feed)
             eval_loss ,eval_acc ,count  = eval_loss+loss ,eval_acc+accuracy ,count+1
-            # print('validataion_{}_accuracy is {:.3f}'.format(index,accuracy))
         return eval_acc/float(count),eval_loss/float(count)
+
     def close(self):
         self.session.close()
         self.train_writer.close()
@@ -160,7 +159,7 @@ class TextCNN():
         for start in range(0,len(Xs),batch_size):
             end = min(start+batch_size,len(Xs))
             yield Xs[start:end],Ys[start:end]
-        pass
+
     def __add_conv_layer(self,filter_size,filter_num):
         with tf.name_scope('conv-maxpool-size%d'%(filter_size)):
             #convolutio layer

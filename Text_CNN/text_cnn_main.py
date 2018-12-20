@@ -44,7 +44,7 @@ if __name__ == '__main__':
 
     parse.add_argument('--learnrate', type=float, dest='learnrate', help='the NN learnRate', default=0.05)
     parse.add_argument('--epochs', type=int, dest='epochs', help='the model train epochs', default=10)
-    parse.add_argument('--batch_size', type=int, dest='batch_size', help='the train gd batch size.(50-300)', default=50)
+    parse.add_argument('--batch_size', type=int, dest='batch_size', help='the train gd batch size.(50-300)', default=100)
     parse.add_argument('--dropout_pro', type=float, dest='dropout_pro', help='the nn layer dropout_pro', default=0.5)
 
     parse.set_defaults(static_flag=True)
@@ -80,6 +80,7 @@ if __name__ == '__main__':
     #交叉验证
     results = []
     for index in tqdm(range(10)):
+        print(" ")
         #打调试断点
         # pdb.set_trace()
         # train_x, train_y, test_x, test_y = process_data.get_train_test_data1(W,revs,index,sentence_max_len,default_values=0.0,vec_size=300)
@@ -89,8 +90,7 @@ if __name__ == '__main__':
         # step4 start train
         text_cnn.train(train_x,train_y)
         # step5 validataion
-        accur,loss = text_cnn.validataion(test_x, test_y)
-        #
+        accur,loss = text_cnn.validataion(train_x, train_y)
         results.append(accur)
         print('cv {} accur is :{:.3f} loss is {:.3f}'.format(index+1,accur,loss))
         text_cnn.close()
