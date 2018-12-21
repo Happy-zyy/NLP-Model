@@ -17,10 +17,11 @@ Learning and demonstrate some  classical model
 >Introduced in Pang/Lee ACL 2005. Released July 2005.   
 
 ---
+test
 
-1.2 词向量包含以下三种**（可以任意选一种或多种累加当作一个词不同的channel）**：  
+1.2 词向量包含以下三种**(可以任意选一种或多种累加当作一个词不同的channel)**：    
 **CNN-rand** : 句子中的的word vector都是随机初始化的，同时当做CNN训练过程中需要优化的参数；  
-**CNN-static** : 句子中的word vector是使用word2vec预先对Google News dataset (about 100 billion words)进行训练好的词向量表中的词向量。且在CNN训练过程中作为固定的输入，不作为优化的参数;  
+**CNN-static** : 句子中的word vector是使用word2vec预先对Google News dataset (about 100 billion words)进行训练好的词向量表中的词向量。且在CNN训练过程中作为固定的输入，不作为优化的参数;    
 **CNN-non-static** : 句子中的word vector是使用word2vec预先对Google News dataset (about 100 billion words)进行训练好的词向量表中的词向量。在CNN训练过程中作为固定的输入，做为CNN训练过程中**需要优化**的参数； 
 
 
