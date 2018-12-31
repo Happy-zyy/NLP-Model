@@ -19,7 +19,6 @@ save_dir = 'checkpoints/textrnn'
 save_path = os.path.join(save_dir, 'best_validation')  # 最佳验证结果保存路径
 
 train_data = "../data/word_vec.p"
-
 label = "brand"
 
 def get_time_dif(start_time):
@@ -146,6 +145,7 @@ def train():
                 break  # 跳出循环
         if flag:  # 同上
             break
+    session.close()
 
 
 def test():
