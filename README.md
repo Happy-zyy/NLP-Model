@@ -158,20 +158,20 @@ rnn_run.py test  #测试
 
 ### 2.模型介绍
 #### 2.1 LSTM
-lstm作为加入了attention机制的rnn网络，对长文本具有很好的记忆效果，其主要归功于模型结构。  
+lstm作为加入了attention机制的rnn网络，对长文本具有很好的记忆效果，其主要归功于模型结构。    
 ![模型](LSTM_GRU/Picture/LSTM2.JPG)
 
 以下是一个lstm单元的结构（**一个lstm单元也就是网络中的一层,即由上述num_layers控制**）  
 ![模型](LSTM_GRU/Picture/LSTM.JPG)
-其中输出即是一个`hidden_dim`的向量，以上两个参数控制lstm最核心的网络架构。
+其中输出即是一个`hidden_dim`的向量，以上两个参数控制lstm最核心的网络架构。  
 
 #### 2.2 GRU
-gru可以说是lstm的初代版本，一个GRU单元如下所示
+gru可以说是lstm的初代版本，一个GRU单元如下所示  
 ![模型](LSTM_GRU/Picture/GRU.JPG)  
 
 ### 3.实验结果
 本次实验是帮师兄做了的一个关于设备识别分类的工作。从50W条设备banner信息中对设备品牌和型号进行识别。  
-因为数据相对规整，用lstm处理得到的效果也非常好，正确率能达到99%
+因为数据相对规整，用lstm处理得到的效果也非常好，正确率能达到99%  
 ![模型](LSTM_GRU/Picture/accuracy.png)
 
 ![模型](LSTM_GRU/Picture/loss.png)
