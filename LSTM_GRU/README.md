@@ -4,7 +4,20 @@
 ## Usage
 
 ### 1. 数据预处理
-在data文件中，先使用`data_clean.py`对文本数据进行预处理
+在data文件中，先使用`data_clean.py`对文本数据进行预处理,包括步骤如下：  
+#### 1.1 原数据数据清洗
+对所给文本文件进行去停用词、去异常文本、去超长文本操作
+
+#### 1.2 训练词向量
+对将进行的文本信息（banner.txt）利用word2vec模型训练词向量 
+```
+word2vec -train banner.txt -output vec1.bin -cbow 0 -hs 1 -threads 12 -binary 1
+``` 
+
+#### 1.3 词向量表示
+对原文本中所有词建立词向量字典，未登录词采用正态分布随机表示.  
+
+---
 
 最后处理的格式信息如下：
 ```
@@ -65,12 +78,17 @@ lstm作为加入了attention机制的rnn网络，对长文本具有很好的记�
 gru可以说是lstm的初代版本，一个GRU单元如下所示  
 ![模型](./Picture/GRU.JPG)  
 
+### 3.整体模型结构  
+![模型](./Picture/rnn_architecture.png)  
+
 ## 实验结果
 本次实验是帮师兄做了的一个关于设备识别分类的工作。从50W条设备banner信息中对设备品牌和型号进行识别。  
 因为数据相对规整，用lstm处理得到的效果也非常好，正确率能达到99%    
 ![模型](./Picture/accuracy.png)  
 
 ![模型](./Picture/loss.png)
+
+
 
 ## LSTM和GRU的区别
 先给出一些结论：  

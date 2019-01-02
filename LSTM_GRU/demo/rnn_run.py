@@ -14,8 +14,8 @@ from tqdm import tqdm
 from rnn_model import TRNNConfig, TextRNN
 import process_data
 
-tensorboard_dir = 'tensorboard/textrnn'                # 可视化路径
-save_dir = 'checkpoints/textrnn'
+tensorboard_dir = '../model/tensorboard/textrnn'                # 可视化路径
+save_dir = '../model/checkpoints/textrnn'
 save_path = os.path.join(save_dir, 'best_validation')  # 最佳验证结果保存路径
 
 train_data = "../data/word_vec.p"
