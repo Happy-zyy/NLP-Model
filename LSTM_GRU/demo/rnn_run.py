@@ -152,7 +152,7 @@ def test():
     print("Loading test data...")
     start_time = time.time()
 
-    x_test, y_test = process_data.get_train_test_data(word_ids, df, label, sentence_max_len, -1)
+    x_test, y_test , categories = process_data.get_train_test_data(word_ids, df, label, sentence_max_len, -1)
 
 
     session = tf.Session()
@@ -182,7 +182,7 @@ def test():
 
     # 评估
     print("Precision, Recall and F1-Score...")
-    print(metrics.classification_report(y_test_cls, y_pred_cls, target_names=config.num_classes))
+    print(metrics.classification_report(y_test_cls, y_pred_cls, target_names=categories))
 
     # 混淆矩阵
     print("Confusion Matrix...")

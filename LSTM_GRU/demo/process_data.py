@@ -20,7 +20,7 @@ def get_train_test_data(word_ids, data_set_df, label, sentence_max_len, cv_id=9)
     s = set()
     for struct in data_set_df:
         s.add(struct[label])
-    cat = list(s)
+    cat = sorted(list(s))
     cat_to_id = dict(zip(cat, range(len(cat))))
 
     data_id, label_id = [], []
@@ -46,4 +46,4 @@ def get_train_test_data(word_ids, data_set_df, label, sentence_max_len, cv_id=9)
         print("test_Num", len(test_index))
         return x_pad[train_index], y_pad[train_index], x_pad[test_index], y_pad[test_index]
     else:
-        return x_pad, y_pad
+        return x_pad, y_pad, cat
