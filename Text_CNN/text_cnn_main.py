@@ -56,7 +56,7 @@ if __name__ == '__main__':
 
     # step2 load data
     print('load data. . .')
-    X = pickle.load(open('../result/word_vec.p','rb'))
+    X = pickle.load(open('./word_vec.p','rb'))
 
     word_vecs_rand, word_vecs, word_cab, sentence_max_len, revs = X[0],X[1],X[2],X[3],X[4]
 

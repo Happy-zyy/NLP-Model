@@ -7,6 +7,7 @@ Learn and demonstrate some  classical model
 
 * [Text-CNN](#text-cnn)
 * [LSTM&GRU](#lstm)
+* [HAN](#HAN)
 * [Glove](#glove)
 
 
@@ -169,6 +170,7 @@ lstm作为加入了attention机制的rnn网络，对长文本具有很好的记�
 gru可以说是lstm的初代版本，一个GRU单元如下所示  
 ![模型](LSTM_GRU/Picture/GRU.JPG)  
 
+
 ### 3.实验结果
 本次实验是帮师兄做了的一个关于设备识别分类的工作。从50W条设备banner信息中对设备品牌和型号进行识别。  
 因为数据相对规整，用lstm处理得到的效果也非常好，正确率能达到99%  
@@ -181,6 +183,42 @@ gru可以说是lstm的初代版本，一个GRU单元如下所示
 - GRU和LSTM的性能在很多任务上不分伯仲。
 - GRU 参数更少因此更容易收敛，但是数据集很大的情况下，LSTM表达性能更好。
 - 从结构上来说，GRU只有两个门（update和reset），LSTM有三个门（forget，input，output），GRU直接将hidden state 传给下一个单元，而LSTM则用memory cell 把hidden state 包装起来。
+
+
+## <span id="HAN">HAN</span>
+### 1.模型介绍
+#### 1.1 特点  
+（1）可以直观的看出用这个模型构建文本表示时各个句子和单词的重要程度，增强了可解释性。  
+（2）文本中不同句子对文本的主旨影响程度不同，一个句子中不同的词语对句子主旨的影响程度也不同，因此HAN在**词语层面**和**句子层面**分别添加了注意力机制。
+
+#### 1.2 结构
+它包括四个部分：一个词序列编码器，一个词级注意层，一个句子编码器和一个句子层注意层。具体结构如下图所示：  
+![](picture/README-1cd4ff0f.png)  
+---
+（1）词序列编码器是通过一个双向GRU实现的  
+![](picture/README-61a8bed9.png)  
+其中：  
+$w_{it}: 第i个句子的第t个词语$  
+$W_e : embedding_matrix$  
+前向和后向结果拼接得到词序列编码：  
+![](picture/README-85ffa053.png)  
+
+（2）词级Attention层
+![](picture/README-8f6b1559.png)  
+其中($6$)式得到权重向量
+
+(3)句子编码器和词编码器类似  
+![](picture/README-85cdfcb9.png)  
+拼接后得到句子编码结果  
+![](picture/README-7ea1b04c.png)  
+
+（4）句子级Attention层  
+![](picture/README-857a805b.png)  
+得到$v$即为文档的向量表示，可以通过一个全连接层进行文档分类。  
+
+
+
+
 
 
 ## <span id="glove">Glove</span>

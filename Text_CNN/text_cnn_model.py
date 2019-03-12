@@ -127,7 +127,7 @@ class TextCNN():
                     self.dropout_pro:self.dropout_pro_item,
                     self.learning_rate:self.learning_rate_item
                 }
-                _,summarys,loss,accuracy = self.session.run([self.train_op,self.merged,self.loss,self.accuracy],feed_dict=feed)
+                _,summarys,loss,accuracy = self.session.run([self.train_op,self.merged,self.loss,self.accuracy], feed_dict=feed)
                 # each 5 batch print log
                 if batch_i % 20 == 0:
                     print('Epoch {:>3} Batch {:>4}/{} train_loss = {:.3f} accuracy = {:.3f}'.
@@ -144,8 +144,8 @@ class TextCNN():
             feed = {
                 self.input_x: x,
                 self.input_y: y,
-                self.dropout_pro: self.dropout_pro_item,
-                self.learning_rate: 1.0
+                self.dropout_pro: 1.0,
+                self.learning_rate: 0.0
             }
             loss ,accuracy = self.session.run([self.loss,self.accuracy],feed_dict=feed)
             eval_loss ,eval_acc ,count  = eval_loss+loss ,eval_acc+accuracy ,count+1
