@@ -198,14 +198,14 @@ gru可以说是lstm的初代版本，一个GRU单元如下所示
 （1）词序列编码器是通过一个双向GRU实现的  
 ![](picture/README-61a8bed9.png)  
 其中：  
-$w_{it}: 第i个句子的第t个词语$  
-$W_e : embedding_matrix$  
+ $w_{it}: 第i个句子的第t个词语$     
+ $W_e$  : embedding_matrix  
 前向和后向结果拼接得到词序列编码：  
 ![](picture/README-85ffa053.png)  
 
 （2）词级Attention层
 ![](picture/README-8f6b1559.png)  
-其中($6$)式得到权重向量
+其中 $6$ 式得到权重向量
 
 (3)句子编码器和词编码器类似  
 ![](picture/README-85cdfcb9.png)  
@@ -214,7 +214,7 @@ $W_e : embedding_matrix$
 
 （4）句子级Attention层  
 ![](picture/README-857a805b.png)  
-得到$v$即为文档的向量表示，可以通过一个全连接层进行文档分类。  
+得到 $v$ 即为文档的向量表示，可以通过一个全连接层进行文档分类。  
 
 
 
