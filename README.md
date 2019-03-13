@@ -214,9 +214,12 @@ gru可以说是lstm的初代版本，一个GRU单元如下所示
 
 （4）句子级Attention层  
 ![](picture/README-857a805b.png)  
-得到 $v$ 即为文档的向量表示，可以通过一个全连接层进行文档分类。  
+得到 $v$ 即为文档的向量表示，可以通过一个全连接层,然后softmax输出，进行文档分类。  
+![](picture/README-4fcc65db.png)  
 
-
+#### 1.3 可视化  
+![](picture/README-f68d8b8d.png)  
+图中蓝色颜色深浅表示word level的attention权重，红色颜色深浅表示sentence level的attention权重。
 
 
 
